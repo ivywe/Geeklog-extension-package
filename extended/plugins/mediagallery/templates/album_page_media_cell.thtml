@@ -1,0 +1,49 @@
+{# begin {templatelocation} #}
+
+  <div>
+    <div class="uk-card uk-card-default gl-media-cell">
+      <div class="uk-card-media-top">
+        <div class="uk-text-center mg_media_detail" style="min-height:200px">{media_item_thumbnail}{mp3_podcast}</div>
+      </div>
+      <div class="uk-card-small uk-card-body">
+        <h3 class="uk-card-title">{media_link_start}<span uk-icon="icon: image"></span>{!if media_title}{media_title} {musicalbum}{!else}Media{!endif}{media_link_end}</h3>
+
+        <div class="uk-text-small uk-text-center">
+          <div><input class="uk-input uk-width-1-1" value="{media_id}"></div>
+
+          {!if artist}
+          <div class="mg_artist">{artist}</div>
+          {!endif}
+
+          {!if search_album}
+          <div class="mg_search_album">{search_album}</div>
+          {!endif}
+
+          <div class="mg_time">{media_time}</div>
+
+          {!if media_comments}
+          <div class="mg_comments">{lang_comments} {media_comments_count}</div>
+          {!endif}
+
+          {!if media_views}
+          <div class="mg_views">{lang_views} {media_views_count}</div>
+          {!endif}
+
+          {!if rating_box}
+          {rating_box}
+          {!endif}
+
+          {!if edit_link}
+          <div class="mgMediaEdit">{edit_link}</div>
+          {!endif}
+
+          {!if enable_keywords}
+          <div class="uk-text-primary"><span class="uk-text-small"><span class="uk-text-bold">{lang_keywords}</span> {media_keywords}</span></div>
+          {!endif}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{# end {templatelocation} #}

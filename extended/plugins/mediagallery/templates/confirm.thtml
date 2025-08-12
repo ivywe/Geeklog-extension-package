@@ -1,0 +1,22 @@
+{# begin {templatelocation} #}
+
+<ul class="uk-breadcrumb">
+<li><a href="{site_url}/index.php">ホーム</a></li>
+<li><a href="{site_url}/mediagallery/index.php"><?php global $_MG_DEFAULT; if(isset($_MG_DEFAULT['root_album_name'])) echo $_MG_DEFAULT['root_album_name']; else echo "TOPアルバム"; ?></a></li>
+<li>{lang_title}</li>
+</ul>
+
+<h2>{lang_title}</h2>
+<form name="confirm" method="post" action="{s_form_action}" class="uk-form">
+<div>
+{message}
+</div>
+<div class="mg_submit">
+<input type="hidden" name="aid" value="{aid}"{xhtml}>
+<input type="hidden" name="action" value="{action}"{xhtml}>
+<input type="submit" class="uk-button uk-button-primary" name="mode" value="{lang_next}"{xhtml}>
+<input type="submit" class="uk-button uk-button-default" name="mode" value="{lang_cancel}"{xhtml}>
+</div>
+</form>
+
+{# end {templatelocation} #}

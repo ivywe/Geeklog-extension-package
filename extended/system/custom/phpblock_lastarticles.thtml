@@ -1,0 +1,11 @@
+<div class="uk-grid-small" uk-grid>
+	<div class="uk-width-2-5@m">
+		<a href="{link}"><img src="{img_tn}" style="width:80px; height:auto "></a>
+	</div>
+	<div class="uk-width-3-5@m">
+		<dl>
+			<dt class="uk-text-small">{date}</dt>
+			<dd><a href="{link}">{title}</a></dd>
+		</dl>
+	</div>
+</div>

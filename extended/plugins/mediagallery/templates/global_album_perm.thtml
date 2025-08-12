@@ -1,0 +1,70 @@
+{# begin {templatelocation} #}
+
+<section>
+<div class="uk-container">
+
+<ul class="uk-breadcrumb">
+<li><a href="{site_url}/index.php">ホーム</a></li>
+<li><a href="{site_url}/mediagallery/index.php"><?php global $_MG_DEFAULT; if(isset($_MG_DEFAULT['root_album_name'])) echo $_MG_DEFAULT['root_album_name']; else echo "TOPアルバム"; ?></a></li>
+<li>アルバム権限の編集（全体）</li></ul>
+</ul>
+
+<form name="globalperm" enctype="multipart/form-data" method="post" action="{s_form_action}" class="uk-form">
+<div>
+<input type="hidden" name="action" value="{action}"{xhtml}>
+<input type="hidden" name="album_id" value="0"{xhtml}>
+<input type="hidden" name="admin_menu" value="{admin_menu}"{xhtml}>
+{lang_global_perm_help}
+<br{xhtml}><br{xhtml}>
+</div>
+<table class="uk-table uk-table-condensed uk-table-striped uk-width-1-1" style="background:#ffffff;">
+  <tr>
+    <th>{lang_attribute}</th>
+    <th align="left">{lang_value}</th>
+    <th>{lang_update}</th>
+  </tr>
+  <tr>
+    <td class="mg_alignright">{lang_group}</td>
+    <td>{group_select}</td>
+    <td><input type="checkbox" class="uk-checkbox" name="group_active" value="1"{xhtml}></td>
+  </tr>
+  <tr>
+    <td class="mg_alignright">{lang_permissions}</td>
+    <td>
+      {lang_perm_key}
+      <br{xhtml}>
+      <div style="clear:both;">{permissions_editor}</div>
+    </td>
+    <td><input type="checkbox" class="uk-checkbox" name="perm_active" value="1"{xhtml}></td>
+  </tr>
+  <tr>
+   <td class="mg_alignright">{lang_member_upload}</td>
+   <td><input type="checkbox" class="uk-checkbox" name="member_upload" value="1"{xhtml}></td>
+   <td><input type="checkbox" class="uk-checkbox" name="upload_active" value="1"{xhtml}></td>
+  </tr>
+  <tr>
+    <td class="mg_alignright">{lang_moderate_album}</td>
+    <td><input type="checkbox" class="uk-checkbox" name="moderation" value="1"{xhtml}></td>
+    <td><input type="checkbox" class="uk-checkbox" name="moderate_active" value="1"{xhtml}></td>
+  </tr>
+  <tr>
+    <td class="mg_alignright">{lang_mod_group}</td>
+    <td>{mod_group_select}</td>
+    <td><input type="checkbox" class="uk-checkbox" name="mod_group_active" value="1"{xhtml}></td>
+  </tr>
+  <tr>
+    <td class="mg_alignright">{lang_email_mods_on_submission}</td>
+    <td><input type="checkbox" class="uk-checkbox" name="email_mod" value="1"{xhtml}></td>
+    <td><input type="checkbox" class="uk-checkbox" name="email_mod_active" value="1"{xhtml}></td>
+  </tr>
+</table>
+<div style="text-align:center;margin-top:10px">
+  <input type="submit" class="uk-button uk-button-primary" value="{lang_save}" name="mode"{xhtml}>
+  <input type="submit" class="uk-button uk-button-primary" value="{lang_cancel}" name="mode"{xhtml}>
+</div>
+</form>
+
+</div>
+</section>
+
+{# end {templatelocation} #}

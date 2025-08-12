@@ -1,0 +1,10 @@
+{# begin {templatelocation} #}
+
+<div id="navcontainer" class="uk-navbar-left">
+  <ul id="navlist" class="uk-navbar-nav">
+    {menuitems}
+  </ul>
+</div>
+<div class="clearboth"></div>
+
+{# end {templatelocation} #}

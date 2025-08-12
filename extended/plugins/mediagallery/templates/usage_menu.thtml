@@ -1,0 +1,26 @@
+{# begin {templatelocation} #}
+
+<form method="post" action="{s_form_action}" class="uk-form">
+<table class="uk-table uk-table-condensed uk-table-striped uk-width-1-1" style="background:#ffffff;">
+  <tr>
+    <td class="alignright" style="white-space:nowrap; width:100px;">{lang_select_date}:</td>
+    <td>
+      {month_select}&nbsp;/
+      {day_select}&nbsp;/
+      {year_select}&nbsp;&nbsp;
+      <input type="checkbox" class="uk-checkbox" name="alldates"{xhtml}>{lang_all_dates}
+    </td>
+  </tr>
+  <tr>
+    <td align="right">{lang_select_user}:</td>
+    <td>
+      {user_select}
+    </td>
+  </tr>
+</table>
+<div class="mg_submit">
+  <input type="submit" class="uk-button uk-button-primary" name="mode" value="{lang_submit}"{xhtml}>
+</div>
+</form>
+
+{# end {templatelocation} #}

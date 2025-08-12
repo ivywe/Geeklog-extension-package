@@ -1,0 +1,640 @@
+{# begin {templatelocation} #}
+
+<?php  if( SEC_inGroup('Root')){ ?>
+
+<section id="_top" class="uk-section" style="background:white">
+  <div class="uk-container">
+
+    <ul class="uk-breadcrumb">
+    {birdseed}
+    </ul>
+
+    <div class="uk-card uk-card-default uk-grid-match" uk-grid>
+      <div class="uk-width-2-3@m">
+        <h1 class="uk-text-truncate uk-h3">{!!if {album_id}=="0" !!}{!else}<button class="uk-button-primary uk-margin-small-right" style="line-height:30px">{album_id}</button>{!endif}<span style="margin-bottom:0">{album_title}</span>{!if rsslink}&nbsp;&nbsp;{rsslink}{!endif}</h1>
+      </div>
+      {!if select_adminbox}
+      <div class="uk-width-1-3@m">
+        {select_adminbox}
+      </div>
+      {!endif}
+    </div>
+
+    <div class="uk-margin-small">自動タグ &#91;medialist:{!!if {album_id}=="0" !!}アルバムID{!else}{album_id}{!endif} theme:(テーマ名) src:(tn|disp|orig) limitcnt:(最大枚数) &#93; &#91;media:(media_id) src:(tn|disp|orig)&#93; &#91;media_url:(media_id) src:(tn|disp|orig) &#93;</div>
+
+    <ul class="uk-subnav uk-flex-center">
+      <li><a href="#_top" uk-scroll="offset:100">TOP</a></li>
+      <li><a href="#_medialist" uk-scroll="offset:100">Medialist活用方法</a></li>
+    </ul>
+
+
+    {!if album_description}
+    <div class="uk-clearfix">
+       {album_description}
+    </div>
+    {!endif}
+
+    {!if album_body}
+    <div uk-card>
+      <div class="uk-child-width-1-2@s uk-child-width-1-4@m" uk-grid uk-height-match="target: > div > div > .uk-card">
+        <!-- BEGIN ImageRow -->
+        <!-- BEGIN ImageColumn -->
+        <div>
+        {CELL_DISPLAY_IMAGE}
+        </div>
+        <!-- END ImageColumn -->
+        <!-- END ImageRow -->
+      </div>
+    </div>
+    {!endif}
+
+    {!if lang_no_image}<div class="noitems">{lang_no_image}</div>{!endif}
+
+    <div class="uk-card uk-card-default uk-card-body">
+      <ul class="uk-subnav uk-subnav-line uk-flex-center"><li>{album_id_display}</li><li>{page_number}</li></ul>
+      <div class="uk-margin-remove-left" uk-grid>
+        <div>{jumpbox}</div>
+        <div>{bottom_pagination}</div>
+        <div>{select_sortbox}</div>
+        <div>{album_cp_select}</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="_medialist" class="uk-section" style="background:white">
+  <div class="uk-container">
+
+    <ul class="uk-subnav uk-flex-center">
+      <li><a href="#_top" uk-scroll="offset:100">TOP</a></li>
+      <li><a href="#_medialist" uk-scroll="offset:100">Medialist活用方法</a></li>
+    </ul>
+    <div class="uk-card uk-card-secondary uk-card-body">
+
+
+      <h1 class="uk-text-center">Medialist活用方法</h1>
+      <h2>1. 自動タグ Medialist</h2>
+      <div class="uk-margin-large-left">
+
+
+        <ul uk-accordion>
+          <li>
+              <a class="uk-accordion-title" href="#" style="background:#888">書式とOption</a>
+              <div class="uk-accordion-content">
+
+
+                [ medialist:アルバムID option列挙]
+                例) [ medialist:3 theme:default ]
+
+
+
+                <h3>option</h3>
+                <table rules="all" class="uk-table uk-table-condensed uk-table-divider gl-table-condensed" style="background-color: #333; width:800px; border:2px #000000 solid; color:#eee">
+                <tr>  <th>option名</th>  <th>初期値</th>  <th>値</th>  <th>機能</th>  </tr>
+                <tr>  <th>class</th><td>  </td><td>class名</td><td>class</td>  </tr>
+                <tr>  <th>theme</th><td>default</td><td>  </td><td>テーマ名</td>  </tr>
+                <tr>  <th>limitcnt</th><td>0</td><td>  </td><td>画像枚数の制限</td>  </tr>
+                <tr>  <th>sort</th><td>asc</td><td>asc/desc</td><td>ソート順</td>  </tr>
+                <tr>  <th>src</th><td>  </td><td>tn/disp/orig</td><td>ソースの種類</td>  </tr>
+                <tr>  <th>title</th><td>  </td><td>0:非表示/1:表示</td><td>タイトル表示フラグ</td>  </tr>
+                <tr>  <th>album_title_disp</th><td>  </td><td>なし:非表示/1:表示</td><td>アルバムタイトル表示フラグ</td>  </tr>
+                <tr>  <th>media_title_disp</th><td>  </td><td>なし:非表示/1:表示</td><td>メディアタイトル表示フラグ</td>  </tr>
+                <tr>  <th>album_title_tag</th><td>  </td><td>なし:非表示/1:表示</td><td>アルバムタイトルtag h2,h3 など</td>  </tr>
+                <tr>  <th>media_title_tag</th><td>  </td><td>なし:非表示/1:表示</td><td>メディアタイトルtag h3 h4 p div など</td>  </tr>
+                <tr>  <th>desc</th><td>  </td><td>0:非表示/1:表示</td><td>説明表示フラグ</td>  </tr>
+                <tr>  <th>media</th><td>  </td><td>  </td><td>背景に表示するMedia ID</td>  </tr>
+                <tr>  <th>tn</th><td>  </td><td>  </td><td>サムネイルタイプ (200 360 400 custom 200x200 360x360 400x400 cropcustom)</td>  </tr>
+                <tr>  <th>grid</th><td>  </td><td>n</td><td>grid数 uk-child-width-1-X</td>  </tr>
+                <tr>  <th>grid_s</th><td>  </td><td>n</td><td>grid数 uk-child-width-1-X@s</td>  </tr>
+                <tr>  <th>grid_m</th><td>  </td><td>n</td><td>grid数 uk-child-width-1-X@m</td>  </tr>
+                <tr>  <th>grid_l</th><td>  </td><td>n</td><td>grid数 uk-child-width-1-X@l</td>  </tr>
+                <tr>  <th>grid_left</th><td>  </td><td>n-n</td><td>右側の幅 2-5など  uk-width-X-X</td>  </tr>
+                <tr>  <th>grid_right</th><td>  </td><td>n-n</td><td>右側の幅 3-5など  uk-width-X-X</td>  </tr>
+                <tr>  <th>uks</th><td>  </td><td>class名</td><td>  &lt;section class名.つなぎで複数可</td>  </tr>
+                <tr>  <th>ukc</th><td>  </td><td>class名</td><td>  &lt;div class=”uk-container追加class名.つなぎで複数可</td>  </tr>
+                <tr>  <th>reverse</th><td>0</td><td>0:順/1:逆</td><td>左右逆転フラグ</td>  </tr>
+                <tr>  <th>text</th><td>  </td><td>  </td><td>ボタン文字列</td>  </tr>
+                <tr>  <th>text1</th><td>  </td><td>  </td><td>ボタン文字列</td>  </tr>
+                <tr>  <th>text2</th><td>  </td><td>  </td><td>ボタン文字列</td>  </tr>
+                <tr>  <th>text3</th><td>  </td><td>  </td><td>ボタン文字列</td>  </tr>
+                <tr>  <th>target</th><td>  </td><td>  </td><td>target引数 _blankなど</td>  </tr>
+                <tr>  <th>dotnav</th><td>  </td><td>  </td><td>pager表示フラグ</td>  </tr>
+                <tr>  <th>minheight</th><td>  </td><td>  </td><td>スライダーmin-height</td>  </tr>
+                <tr>  <th>maxheight</th><td>  </td><td>  </td><td>スライダーmax-height</td>  </tr>
+                <tr>  <th>class_album_title</th><td>uk-text-center@m</td><td>  </td><td>アルバムタイトルのclass</td>  </tr>
+                <tr>  <th>class_album_desc</th><td>uk-text-center@m</td><td>  </td><td>アルバム説明のclass</td>  </tr>
+                <tr>  <th>class_media_title</th><td>uk-text-center@m</td><td>  </td><td>メディアタイトルのclass</td>  </tr>
+                <tr>  <th>class_media_desc</th><td>uk-text-center@m</td><td>  </td><td>メディア説明のclass</td>  </tr>
+<?php global $bxslider; if($bxslider){ ?>
+                <tr>  <th>bxslider</th><td>  </td><td>  </td><td>bxsliderの定義</td>  </tr>
+<?php } ?>
+                <tr>  <th>animation</th><td>  </td><td>  </td><td>uk-slideshow, uk-slider option</td>  </tr>
+                <tr>  <th>autoplay</th><td>  </td><td>  </td><td>uk-slideshow, uk-slider option</td>  </tr>
+                <tr>  <th>autoplayinterval</th><td>  </td><td>  </td><td>uk-slideshow, uk-slider option</td>  </tr>
+                <tr>  <th>draggable</th><td>  </td><td>  </td><td>uk-slideshow, uk-slider option</td>  </tr>
+                <tr>  <th>easing</th><td>  </td><td>  </td><td>uk-slideshow, uk-slider option</td>  </tr>
+                <tr>  <th>finite</th><td>  </td><td>  </td><td>uk-slideshow, uk-slider option</td>  </tr>
+                <tr>  <th>pauseonhover</th><td>  </td><td>  </td><td>uk-slideshow, uk-slider option</td>  </tr>
+                <tr>  <th>index</th><td>  </td><td>  </td><td>uk-slideshow, uk-slider option</td>  </tr>
+                <tr>  <th>velocity</th><td>  </td><td>  </td><td>uk-slideshow, uk-slider option</td>  </tr>
+                <tr>  <th>ratio</th><td>  </td><td>  </td><td>uk-slideshow, uk-slider option</td>  </tr>
+                <tr>  <th>minheight</th><td>  </td><td>  </td><td>uk-slideshow, uk-slider option</td>  </tr>
+                <tr>  <th>maxheight</th><td>  </td><td>  </td><td>uk-slideshow, uk-slider option</td>  </tr>
+                <tr>  <th>animationduration</th><td>  </td><td>  </td><td>uk-slideshow, uk-slider option</td>  </tr>
+                <tr>  <th>center</th><td>  </td><td>  </td><td>uk-slider option</td>  </tr>
+                <tr>  <th>sets</th><td>  </td><td>  </td><td>uk-slider option</td>  </tr>
+                <tr>  <th>clsactivated</th><td>  </td><td>  </td><td>uk-slider option</td>  </tr>
+                <tr>  <th>cls</th><td>  </td><td>  </td><td>uk-scrollspy option</td>  </tr>
+                <tr>  <th>closest</th><td>  </td><td>  </td><td>uk-scrollspy option</td>  </tr>
+                <tr>  <th>scroll</th><td>  </td><td>  </td><td>uk-scrollspy option</td>  </tr>
+                <tr>  <th>overflow</th><td>  </td><td>  </td><td>uk-scrollspy option</td>  </tr>
+                <tr>  <th>offset</th><td>  </td><td>  </td><td>uk-scrollspy option</td>  </tr>
+
+                <tr>  <th>section</th><td>1</td><td>0:非表示/1:表示</td><td>  &lt;section&gt;表示フラグ</td>  </tr>
+                <tr>  <th>container</th><td>1</td><td>0:非表示/1:表示</td><td>  &lt;div class=”container”&gt;表示フラグ</td>  </tr>
+                <tr>  <th>masonry</th><td>0</td><td>0:無効 1:有効</td><td>uk-grid masonry option</td>  </tr>
+                <tr>  <th>imgclass</th><td>0</td><td></td><td>uk-border-rounded uk-border-circle等 imgのclass</td>  </tr>
+                </table>
+
+
+              </div>
+          </li>
+        </ul>
+        <p>section:0 container:0 を指定するとsection, containerを外せます。</p>
+      </div>
+
+      <h2 class="uk-margin-large-top">2. アルバムを表示する多様なMedialistテーマ</h2>
+
+      <div class="uk-card uk-card-default uk-card-body">
+        <ul>
+          <li>-filter はuk-filterを使うタイプ。</li>
+          <li>-card は　uk-card を使タイプ。</li>
+          <li>-grid は　uk-grid を使タイプ。</li>
+          <li>-bg は背景(background)にmediaを使うタイプ。</li>
+          <li>_keyurl はキーワードにurl。</li>
+          <li>_keyurl2　は ボタンをふたつ配置するタイプ。</li>
+          <li>sections- はひとつの画像を1sectionで区切って表示するタイプ。ただし section:0 でsection削除。</li>
+          <li>1section- はひとつのsectionにまとめて表示するタイプ 1つのsection内に表示。ただし section:0 でsection削除。</li>
+        </ul>
+      </div>
+
+      <div class="uk-margin-large-left uk-margin-large-top">
+
+<style>
+.uk-text-primary li {color: #0088ff;}
+</style>
+
+        <h3 id="_medialist_top">1) 基本テーマ</h3>
+        <ol>
+        <li><a href="#_default" uk-scroll="offset:100">default</a></li>
+        </ol>
+
+        <h3>2) 1セクションに複数配置するタイプ</h3>
+        <ol class="uk-text-primary">
+        <li><a href="#_1section-banner_keyurl" uk-scroll="offset:100">1section-banner_keyurl</a> .................バナー用</li>
+        <li><a href="#_1section-grid" uk-scroll="offset:100">1section-grid</a> .................標準的なグリッドレイアウト</li>
+        <li><a href="#_1section-grid-inline-clip_keyurl" uk-scroll="offset:100">1section-grid-inline-clip_keyurl</a> .................inline clipでURLへリンク</li>
+        <li><a href="#_1section-grid_keyurl" uk-scroll="offset:100">1section-grid_keyurl</a> .................標準的なグリッドレイアウト ボタンリンク</li>
+        <li><a href="#_1section-grid-titlelink_keyurl" uk-scroll="offset:100">1section-grid-titlelink_keyurl</a> .................標準的なグリッドレイアウト タイトルリンク</li>
+        <li><a href="#_1section-grid-card-horizontal" uk-scroll="offset:100">1section-grid-card-horizontal</a> .................カード型グリッドレイアウト</li>
+        <li><a href="#_1section-grid-card1" uk-scroll="offset:100">1section-grid-card1</a> .................カード型グリッドレイアウト</li>
+        <li><a href="#_1section-grid-card1_keyurl" uk-scroll="offset:100">1section-grid-card1_keyurl</a> .................カード型グリッドレイアウト リンク</li>
+        <li><a href="#_1section-grid-card1-titlelink_keyurl" uk-scroll="offset:100">1section-grid-card1-titlelink_keyurl</a> .................カード型グリッドレイアウト タイトルリンク　ボタンなし</li>
+        <li><a href="#_1section-grid-card1-noimage_keyurl2" uk-scroll="offset:100">1section-grid-card1-noimage_keyurl2</a></li>
+        <li><a href="#_1section-grid-card1_keyurl2" uk-scroll="offset:100">1section-grid-card1_keyurl2</a> .................カード型グリッドレイアウト リンク2ボタン</li>
+        <li><a href="#_1section-grid-card2_keyurl" uk-scroll="offset:100">1section-grid-card2_keyurl</a> .................カード型グリッドレイアウト リンク</li>
+        <li><a href="#_1section-grid-card-noimage" uk-scroll="offset:100">1section-grid-card-noimage</a> .................カード型画像なし（特殊）</li>
+        <li><a href="#_1section-menu_keyurl2" uk-scroll="offset:100">1section-menu_keyurl2</a></li>
+        <li><a href="#_1section-card" uk-scroll="offset:100">1section-card</a> .................カード型</li>
+        <li><a href="#_1section-card-left-right_keyurl" uk-scroll="offset:100">1section-card-left-right_keyurl</a> .................カード型左右交互配置 リンク</li>
+        <li><a href="#_1section-card-left-right-lightbox" uk-scroll="offset:100">1section-card-left-right-lightbox</a> .................カード型左右交互配置 lightbox</li>
+        <li><a href="#_1section-col2_reverse" uk-scroll="offset:100">1section-col2_reverse</a> .................カード型 リバース指定可能</li>
+        <li><a href="#_1section-filter_search" uk-scroll="offset:100">1section-filter_search</a> .................フィルターサーチ用</li>
+        <li><a href="#_1section-normal" uk-scroll="offset:100">1section-normal</a> .................ノーマル</li>
+        <li><a href="#_1section-qa" uk-scroll="offset:100">1section-qa</a> .................FAQ用</li>
+        <li><a href="#_1section-slider" uk-scroll="offset:100">1section-slider</a> .................スライダー</li>
+        <li><a href="#_1section-slider-lightbox" uk-scroll="offset:100">1section-slider-lightbox</a> .................スライダー lightbox</li>
+        <li><a href="#_1section-slider-bottom" uk-scroll="offset:100">1section-slider-bottom</a> .................スライダー lightbox helpが下</li>
+        <li><a href="#_1section-slider-cards" uk-scroll="offset:100">1section-slider-cards</a> .................スライダー　カード型</li>
+        <li><a href="#_1section-slider-cards-grid" uk-scroll="offset:100">1section-slider-cards-grid</a> .................スライダー　カード型 グリッド</li>
+        <li><a href="#_1section-slider-cards-grid-large" uk-scroll="offset:100">1section-slider-cards-grid-large</a> .................スライダー　カード型 グリッド 大型</li>
+        <li><a href="#_1section-slider1" uk-scroll="offset:100">1section-slider1</a> .................スライダー1</li>
+        <li><a href="#_1section-slider2" uk-scroll="offset:100">1section-slider2</a> .................スライダー2</li>
+        <li><a href="#_1section-slideshow" uk-scroll="offset:100">1section-slideshow</a> .................スライドショー</li>
+        <li><a href="#_1section-slideshow-mobile" uk-scroll="offset:100">1section-slideshow-mobile</a> .................スライドショー mobile</li>
+        <li><a href="#_1section-slideshow-col2_reverse" uk-scroll="offset:100">1section-slideshow-col2_reverse</a> .................スライドショーcol2 リバース型</li>
+        <li><a href="#_1section-slideshow-textimage" uk-scroll="offset:100">1section-slideshow-textimage</a> .................スライドショー テキストイメージ</li>
+      </ol>
+
+        <h3>3) 1画像1セクションで設置するタイプ</h3>
+        <ol class="uk-text-primary">
+        <li><a href="#_sections-bg-left-right" uk-scroll="offset:100">sections-bg-left-right</a> .................背景イメージ 左右交互型</li>
+        <li><a href="#_sections-bg_keyurl" uk-scroll="offset:100">sections-bg_keyurl</a> .................背景イメージ リンク</li>
+        <li><a href="#_sections-left-right_keyurl" uk-scroll="offset:100">sections-left-right_keyurl</a> .................左右交互 リンク</li>
+        <li><a href="#_sections-card-left-right_keyurl" uk-scroll="offset:100">sections-card-left-right_keyurl</a> .................カード型左右 リンク</li>
+        <li><a href="#_sections-bg-overlay-black_keyurl" uk-scroll="offset:100">sections-bg-overlay-black_keyurl</a> .................背景イメージ 黒オーバーレイ リンク</li>
+        <li><a href="#_sections-bg-overlay-white_keyurl" uk-scroll="offset:100">sections-bg-overlay-white_keyurl</a> .................背景イメージ 白オーバーレイ リンク</li>
+        <li><a href="#_sections-bg-panel-black_keyurl" uk-scroll="offset:100">sections-bg-panel-black_keyurl</a> .................背景イメージ 黒パネル リンク</li>
+        <li><a href="#_sections-bg-panel-white_keyurl" uk-scroll="offset:100">sections-bg-panel-white_keyurl</a> .................背景イメージ 白パネル リンク</li>
+        </ol>
+
+        <h3>4) セクションで囲まれない部品タイプ</h3>
+        <ol class="uk-text-primary">
+        <li><a href="#_sub-accordion" uk-scroll="offset:100">sub-accordion</a> .................アコーディオン</li>
+        <li><a href="#_sub-accordion-access" uk-scroll="offset:100">sub-accordion-access</a> .................アコーディオン アクセス用</li>
+        <li><a href="#_sub-grid_keyurl" uk-scroll="offset:100">sub-grid_keyurl</a> .................グリッド リンク</li>
+        <li><a href="#_sub-slideshow" uk-scroll="offset:100">sub-slideshow</a> .................スライドショー</li>
+        <li><a href="#_sub-slideshow-kenburns" uk-scroll="offset:100">sub-slideshow-kenburns</a> ................. スライドショー kenburns</li>
+<?php global $bxslider; if($bxslider){ ?>
+        <li><a href="#_sub-bxslider-animation-desc-top" uk-scroll="offset:100">sub-bxslider-animation-desc-top</a></li>
+<?php } ?>
+        </ol>
+
+        <h3>5) listタイプ</h3>
+        <ol class="uk-text-primary">
+        <li><a href="#_list" uk-scroll="offset:100">list</a> .................リスト</li>
+        <li><a href="#_list_inc" uk-scroll="offset:100">list_inc</a> .................リスト インクリメント機能</li>
+        <li><a href="#_uk-list" uk-scroll="offset:100">uk-list, uk-list_incでサムネイル付きスライドショー</a></li>
+        </ol>
+
+        <h3>6) デバッグ用その他</h3>
+        <ol class="uk-text-primary">
+        <li><a href="#_debug" uk-scroll="offset:100">debug</a></li>
+        <li><a href="#_media_url" uk-scroll="offset:100">media_url</a> .................アルバムの最新メディアのURL</li>
+        <li><a href="#_media_id" uk-scroll="offset:100">media_id</a> .................アルバムの最新メディアのID</li>
+        </ol>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+<section class="uk-section uk-section-primary uk-preserve-color">
+  <div class="uk-container">
+    <h3 style="color:white">1) 基本テーマ</h3>
+  </div>
+</section>
+
+<?php $media = PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 theme:media_id album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_default">
+                                            &#91;medialist:{album_id} src:tn tn:400 theme:default limitcnt:2 album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+<section class="uk-section uk-section-small">
+  <div class="uk-container">
+{!!autotag medialist:'.{album_id}.' section:0 container:0 src:tn tn:400 theme:default limitcnt:2 !!}
+  </div>
+</section>
+
+<section class="uk-section uk-section-primary uk-preserve-color">
+  <div class="uk-container">
+    <h3 style="color:white">2) 1セクションに複数配置するタイプ</h3>
+  </div>
+</section>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-banner_keyurl">
+                                            &#91;medialist:{album_id} src:disp limitcnt:12 theme:1section-banner_keyurl grid:1 grid_s:3 grid_m:4 grid_l:6 masonry:1 animation:slide class_album_title:uk-hidden class_album_desc:uk-hidden class_media_title:uk-overlay-default.uk-position-bottom.uk-text-center.mg-overlay-small sort:asc uks:uk-section-small album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:12 theme:1section-banner_keyurl grid:1 grid_s:3 grid_m:4 grid_l:6 masonry:1 animation:slide class_album_title:uk-hidden class_album_desc:uk-hidden class_media_title:uk-overlay-default.uk-position-bottom.uk-text-center.mg-overlay-small sort:asc uks:uk-section-small media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid">
+                                            &#91;medialist:{album_id} src:disp limitcnt:12 theme:1section-grid grid:1 grid_s:3 grid_m:4 grid_l:6 masonry:1 animation:slide class_album_title:uk-hidden class_album_desc:uk-hidden class_media_title:uk-overlay-default.uk-position-bottom.uk-text-center.mg-overlay-small sort:asc uks:uk-section-small album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:12 theme:1section-grid grid:1 grid_s:3 grid_m:4 grid_l:6 masonry:1 animation:slide class_album_title:uk-hidden class_album_desc:uk-hidden class_media_title:uk-overlay-default.uk-position-bottom.uk-text-center.mg-overlay-small sort:asc uks:uk-section-small media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid_2">
+                                            &#91;medialist:{album_id} limitcnt:12 src:disp theme:1section-grid grid:1 grid_s:2 grid_m:3 grid_l:4 masonry:1 animation:slide class_album_title:uk-hidden class_album_desc:uk-hidden class_media_title:uk-overlay-primary.uk-position-bottom.uk-text-center.mg-overlay-small sort:desc uks:uk-section-small media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:12 theme:1section-grid grid:1 grid_s:2 grid_m:3 grid_l:4 masonry:1 animation:slide class_album_title:uk-hidden class_album_desc:uk-hidden class_media_title:uk-overlay-primary.uk-position-bottom.uk-text-center.mg-overlay-small sort:desc uks:uk-section-small media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid_3">
+                                            &#91;medialist:{album_id} src:disp limitcnt:12 theme:1section-grid grid:1 grid_s:2 grid_m:3 grid_l:4 masonry:1 animation:slide class_album_title:uk-hidden class_album_desc:uk-hidden class_media_title:mg-overlay-small.uk-text-center sort:desc uks:uk-section-small media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:12 theme:1section-grid grid:1 grid_s:2 grid_m:3 grid_l:4 masonry:1 animation:slide class_album_title:uk-hidden class_album_desc:uk-hidden class_media_title:mg-overlay-small.uk-text-center sort:desc uks:uk-section-small media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid-inline-clip_keyurl">
+                                            &#91;medialist:{album_id} src:disp limitcnt:12 theme:1section-grid-inline-clip_keyurl grid:1 grid_s:3 grid_m:4 grid_l:6 masonry:1 animation:slide class_album_title:uk-hidden class_album_desc:uk-hidden class_media_title:uk-overlay-default.uk-position-bottom.uk-text-center.mg-overlay-small sort:asc uks:uk-section-small media:<?php echo $media; ?> album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:12 theme:1section-grid-inline-clip_keyurl grid:1 grid_s:3 grid_m:4 grid_l:6 masonry:1 animation:slide class_album_title:uk-hidden class_album_desc:uk-hidden class_media_title:uk-overlay-default.uk-position-bottom.uk-text-center.mg-overlay-small sort:asc uks:uk-section-small media:'.$media.' album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid_keyurl">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-grid_keyurl grid:1 grid_s:1 grid_m:3 grid_l:4 text:プランを見る uks:uk-section-small media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-grid_keyurl grid:1 grid_s:1 grid_m:3 grid_l:4 text:プランを見る uks:uk-section-small media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+  <h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid-titlelink_keyurl">
+                                              &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-grid-titlelink_keyurl grid:1 grid_s:1 grid_m:3 grid_l:4 text:プランを見る uks:uk-section-small media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+    <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-grid-titlelink_keyurl grid:1 grid_s:1 grid_m:3 grid_l:4 text:プランを見る uks:uk-section-small media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid-card-horizontal">
+                                            &#91;medialist:{album_id} src:tn limitcnt:6 theme:1section-grid-card-horizontal uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:2 grid_l:3 masonry:1 animation:slide text:詳細を見る media:&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:tn limitcnt:6 theme:1section-grid-card-horizontal uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:2 grid_l:3 masonry:1 animation:slide text:詳細を見る media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid-card1">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-grid-card1 uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 masonry:1 animation:slide text:詳細を見る media:&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-grid-card1 uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 masonry:1 animation:slide text:詳細を見る media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid-card1_keyurl">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-grid-card1_keyurl uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 masonry:1 animation:slide text:詳細を見る media:&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-grid-card1_keyurl uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 masonry:1 animation:slide text:詳細を見る media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid-card1-titlelink_keyurl">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-grid-card1-titlelink_keyurl uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 masonry:1 animation:slide text:詳細を見る media:&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-grid-card1-titlelink_keyurl uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 masonry:1 animation:slide text:詳細を見る media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid-card1_keyurl2">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-grid-card1_keyurl2 uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 masonry:1 animation:slide text2:リンク1 text3:リンク2 media:&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-grid-card1_keyurl2 uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 masonry:1 animation:slide text2:リンク1 text3:リンク2 media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid-card1-noimage_keyurl2">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-grid-card1-noimage_keyurl2 uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 masonry:1 animation:slide text:詳細を見る media:&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-grid-card1-noimage_keyurl2 uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 masonry:1 animation:slide text:詳細を見る media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid-card1-noimage_keyurl2">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-grid-card1-noimage_keyurl2 uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 masonry:1 animation:slide text2:リンク1 text3:リンク2 media:&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-grid-card1-noimage_keyurl2 uks:uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 masonry:1 animation:slide text2:リンク1 text3:リンク2 media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid-card2_keyurl">
+                                            &#91;medialist:{album_id} src:disp limitcnt:2 theme:1section-grid-card2_keyurl uks:uk-section-muted section:0 ukc:uk-text-center ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 text:プランを見る media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:2 theme:1section-grid-card2_keyurl uks:uk-section-muted section:0 ukc:uk-text-center ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 text:プランを見る media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-grid-card-noimage">
+                                            &#91;medialist:{album_id} src:disp limitcnt:2 theme:1section-grid-card-noimage uks:uk-section-muted section:0 ukc:uk-text-center ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 text:プランを見る media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:2 theme:1section-grid-card-noimage uks:uk-section-muted section:0 ukc:uk-text-center ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 text:プランを見る media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-menu_keyurl2">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-menu_keyurl2 uks:uk-section-small.uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 text1:お品書きを見る text2:詳細を見る text3:ギャラリー media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-menu_keyurl2 uks:uk-section-small.uk-section-muted section:0 ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 text1:お品書きを見る text2:詳細を見る text3:ギャラリー media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-card">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-card uks:uk-section-large ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 text1:説明 text2:詳細 media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-card uks:uk-section-large ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 text1:説明 text2:詳細 media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-card-nomedia">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-card uks:uk-section-large ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 text1:説明 text2:詳細 media:<?php echo $media; ?> album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-card uks:uk-section-large ukc: grid:1 grid_s:1 grid_m:3 grid_l:4 text1:説明 text2:詳細 media:'.$media.' album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-card-left-right_keyurl">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-card-left-right_keyurl grid_left:3-5 grid_right:2-5 text:詳細を見る uks:uk-section-small media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-card-left-right_keyurl grid_left:3-5 grid_right:2-5 text:詳細を見る uks:uk-section-small media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-card-left-right-lightbox">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-card-left-right-lightbox grid_left:3-5 grid_right:2-5 text:詳細を見る uks:uk-section-small media:< album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-card-left-right-lightbox grid_left:3-5 grid_right:2-5 text:詳細を見る uks:uk-section-small media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-col2_reverse">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-col2_reverse uks:uk-section-small ukc:uk-container-small.uk-comment-primary grid_left:1-3 grid_right:2-3 reverse: class_media_desc:uk-text-left imgclass:uk-border-rounded media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-col2_reverse uks:uk-section-small ukc:uk-container-small.uk-comment-primary grid_left:1-3 grid_right:2-3 reverse: class_media_desc:uk-text-left imgclass:uk-border-rounded media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-col2_reverse_2">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3  theme:1section-col2_reverse uks:uk-section-small ukc:uk-container-small.uk-comment-primary grid_left:2-3 grid_right:1-3 reverse:1 class_media_desc:uk-text-left imgclass:uk-border-circle media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3  theme:1section-col2_reverse uks:uk-section-small ukc:uk-container-small.uk-comment-primary grid_left:2-3 grid_right:1-3 reverse:1 class_media_desc:uk-text-left imgclass:uk-border-circle media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-filter_search">
+                                            &#91;medialist:{album_id} src:tn tn:400x400 limitcnt:10 theme:1section-filter_search src:disp grid:1 grid_s:1 grid_m:5 masonry:1 uks:uk-section-large media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:tn tn:400x400 limitcnt:10 theme:1section-filter_search src:disp grid:1 grid_s:1 grid_m:5 masonry:1 uks:uk-section-large media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-normal">
+                                            &#91;medialist:{album_id} src:tn tn:400x400 limitcnt:10 theme:1section-normal src:disp grid:1 grid_s:1 grid_m:5 masonry:1 uks:uk-section-large media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:tn tn:400x400 limitcnt:10 theme:1section-normal src:disp grid:1 grid_s:1 grid_m:5 masonry:1 uks:uk-section-large media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-qa">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-qa uks:uk-section-large media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-qa uks:uk-section-large media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-slider">
+                                            &#91;medialist:{album_id} src:disp limitcnt:10 theme:1section-slider grid:2 grid_s:2 grid_m:3 autoplay:true autoplayinterval:7000 center:false draggable:true easing:ease finite:false index:0 pause-on-hover:true sets:false velocity: media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:10 theme:1section-slider title: grid:2 grid_s:2 grid_m:3 autoplay:true autoplayinterval:7000 center:false draggable:true easing:ease finite:false index:0 pause-on-hover:true sets:false velocity:1 album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-slider-lightbox">
+                                            &#91;medialist:{album_id} src:disp limitcnt:10 theme:1section-slider-lightbox grid:2 grid_s:2 grid_m:3 autoplay:true autoplayinterval:7000 center:false draggable:true easing:ease finite:false index:0 pause-on-hover:true sets:false velocity:1 media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:10 theme:1section-slider-lightbox grid:3 grid_s:5 grid_m:7 autoplay:true autoplayinterval:7000 center:false draggable:true easing:ease finite:false index:0 pause-on-hover:true sets:false velocity:1 album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-slider-bottom">
+                                            &#91;medialist:{album_id} src:disp limitcnt:10 theme:1section-slider-bottom dotnav:1 autoplay:true center:true clsactivated:uk-transition-active media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:10 theme:1section-slider-bottom dotnav:1 autoplay:true center:true clsactivated:uk-transition-active album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-slider-cards">
+                                            &#91;medialist:{album_id} src:tn tn:400 limitcnt:10 theme:1section-slider-cards dotnav:1 autoplay:true center:true clsactivated:uk-transition-active media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:tn tn:400 limitcnt:10 theme:1section-slider-cards dotnav:1 autoplay:true center:true clsactivated:uk-transition-active album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-slider-cards-grid">
+                                            &#91;medialist:{album_id} src:tn tn:400 limitcnt:10 theme:1section-slider-cards-grid dotnav:1 autoplay:true center:true clsactivated:uk-transition-active media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:tn tn:400 limitcnt:10 theme:1section-slider-cards-grid dotnav:1 autoplay:true center:true clsactivated:uk-transition-active album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-slider-cards-grid-large">
+                                            &#91;medialist:{album_id} src:tn tn:360 limitcnt:10 theme:1section-slider-cards-grid-large dotnav:1 autoplay:true center:true clsactivated:uk-transition-active media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:tn tn:360 limitcnt:10 theme:1section-slider-cards-grid-large dotnav:1 autoplay:true center:true clsactivated:uk-transition-active album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-slider1">
+                                            &#91;medialist:{album_id} src:tn tn:400 limitcnt:10 theme:1section-slider1 title: grid:2 grid_s:2 grid_m:4 grid_l:6 autoplay:true autoplayinterval:7000 center:false draggable:true easing:ease finite:false index:0 pause-on-hover:true sets:false velocity:1 media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:tn tn:400 limitcnt:10 theme:1section-slider1 title: grid:2 grid_s:2 grid_m:4 grid_l:6 autoplay:true autoplayinterval:7000 center:false draggable:true easing:ease finite:false index:0 pause-on-hover:true sets:false velocity:1 album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-slider2">
+                                            &#91;medialist:{album_id} src:disp limitcnt:5 theme:1section-slider2 title: dotnav:1 grid:2 grid_s:2 grid_m:3 grid_l:4 autoplay:true autoplayinterval:7000 center:false draggable:true easing:ease finite:false index:0 pause-on-hover:true sets:false velocity:1 media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:5 theme:1section-slider2 title: dotnav:1 grid:2 grid_s:2 grid_m:3 grid_l:4 autoplay:true autoplayinterval:7000 center:false draggable:true easing:ease finite:false index:0 pause-on-hover:true sets:false velocity:1 album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-slideshow">
+                                            &#91;medialist:{album_id} src:orig limitcnt:3 theme:1section-slideshow dotnav:1 animation:fade autoplay:true autoplayinterval:7000 draggable:true easing:ease finite:false pause-on-hover:true index:0 velocity:1 ratio:16_9 minheight:400 maxheight:500 animationduration:0.1s media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:orig limitcnt:3 theme:1section-slideshow dotnav:1 animation:fade autoplay:true autoplayinterval:7000 draggable:true easing:ease finite:false pause-on-hover:true index:0 velocity:1 ratio:16_9 minheight:400 maxheight:500 animationduration:0.1s media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-slideshow-mobile">
+                                            &#91;medialist:{album_id} src:orig limitcnt:3 theme:1section-slideshow-mobile dotnav:1 animation:fade autoplay:true autoplayinterval:7000 draggable:true easing:ease finite:false pause-on-hover:true index:0 velocity:1 ratio:16_9 minheight:400 maxheight:500 animationduration:0.1s media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:orig limitcnt:3 theme:1section-slideshow-mobile dotnav:1 animation:fade autoplay:true autoplayinterval:7000 draggable:true easing:ease finite:false pause-on-hover:true index:0 velocity:1 ratio:16_9 minheight:400 maxheight:500 animationduration:0.1s media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-slideshow-col2_reverse">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-slideshow-col2_reverse title: uks:uk-section-large ukc: animation:fade autoplay:true autoplayinterval:7000 draggable:true easing:ease finite:false pause-on-hover:true index:0 velocity:1 ratio:16_9 minheight:400 maxheight:500 animationduration:0.1s grid_left:3-5 grid_right:2-5 reverse: dotnav:1 text:詳細を見る media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-slideshow-col2_reverse title: uks:uk-section-large ukc: animation:fade autoplay:true autoplayinterval:7000 draggable:true easing:ease finite:false pause-on-hover:true index:0 velocity:1 ratio:16_9 minheight:400 maxheight:500 animationduration:0.1s grid_left:3-5 grid_right:2-5 reverse: dotnav:1 text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_1section-slideshow-textimage">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:1section-slideshow-textimage title: uks:uk-section-large ukc: animation:fade autoplay:true autoplayinterval:7000 draggable:true easing:ease finite:false pause-on-hover:true index:0 velocity:1 ratio:16_9 minheight:400 maxheight:500 animationduration:0.1s grid_left:3-5 grid_right:2-5 reverse: dotnav:1 text:詳細を見る media: album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+  <?php echo PLG_replaceTags('[medialist:'.$this->get_var('album_id').' section:0 container:0 src:disp limitcnt:3 theme:1section-slideshow-textimage title: uks:uk-section-large ukc: animation:fade autoplay:true autoplayinterval:7000 draggable:true easing:ease finite:false pause-on-hover:true index:0 velocity:1 ratio:16_9 minheight:400 maxheight:500 animationduration:0.1s grid_left:3-5 grid_right:2-5 reverse: dotnav:1 text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:]'); ?><div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<section class="uk-section uk-section-primary uk-preserve-color">
+  <div class="uk-container">
+    <h3 style="color:white">3) 1画像1セクションで設置するタイプ</h3>
+  </div>
+</section>
+
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sections-bg-left-right">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:sections-bg-left-right text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+                                    {!!autotag medialist:'.{album_id}.' section:0 container:0 src:disp limitcnt:3 theme:sections-bg-left-right text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sections-bg_keyurl">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:sections-bg_keyurl text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+                                    {!!autotag medialist:'.{album_id}.' section:0 container:0 src:disp limitcnt:3 theme:sections-bg_keyurl text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sections-bg-overlay-black_keyurl">
+                                            &#91;medialist:{album_id} src:orig limitcnt:3 theme:sections-bg-overlay-black_keyurl text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+                                    {!!autotag medialist:'.{album_id}.' section:0 container:0 src:orig limitcnt:3 theme:sections-bg-overlay-black_keyurl text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sections-bg-overlay-white_keyurl">
+                                            &#91;medialist:{album_id} src:orig limitcnt:3 theme:sections-bg-overlay-white_keyurl text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+                                    {!!autotag medialist:'.{album_id}.' section:0 container:0 src:orig limitcnt:3 theme:sections-bg-overlay-white_keyurl text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sections-bg-panel-black_keyurl">
+                                            &#91;medialist:{album_id} src:orig limitcnt:3 theme:sections-bg-panel-black_keyurl text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+                                    {!!autotag medialist:'.{album_id}.' section:0 container:0 src:orig limitcnt:3 theme:sections-bg-panel-black_keyurl text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sections-bg-panel-white_keyurl">
+                                            &#91;medialist:{album_id} src:orig limitcnt:3 theme:sections-bg-panel-white_keyurl text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+                                    {!!autotag medialist:'.{album_id}.' section:0 container:0 src:orig limitcnt:3 theme:sections-bg-panel-white_keyurl text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sections-left-right_keyurl">
+                                            &#91;medialist:{album_id} src:orig limitcnt:3 theme:sections-left-right_keyurl grid_left:1-2 grid_right:1-2 section:0 container:0 reverse:0 text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+                                    {!!autotag medialist:'.{album_id}.' section:0 container:0 src:orig limitcnt:3 theme:sections-left-right_keyurl grid_left:1-2 grid_right:1-2 section:0 container:0 reverse:0 text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sections-card-left-right_keyurl">
+                                            &#91;medialist:{album_id} src:orig limitcnt:3 theme:sections-card-left-right_keyurl grid_left:3-5 grid_right:2-5 section:0 container:0 reverse:0 text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+                                    {!!autotag medialist:'.{album_id}.' section:0 container:0 src:orig limitcnt:3 theme:sections-card-left-right_keyurl grid_left:3-5 grid_right:2-5 section:0 container:0 reverse:0 text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<section class="uk-section uk-section-primary uk-preserve-color">
+  <div class="uk-container">
+    <h3 style="color:white">4) セクションで囲まれない部品タイプ</h3>
+  </div>
+</section>
+<section class="uk-section">
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sub-accordion">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:sub-accordion album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+<section class="uk-section">
+  <div class="uk-container">
+                                   {!!autotag medialist:'.{album_id}.' src:disp limitcnt:3 theme:sub-accordion !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+  </div>
+</section>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sub-accordion-access">
+                                            &#91;medialist:{album_id} src:disp limitcnt:3 theme:sub-accordion-access grid:1 grid_s:2 grid_m:3 grid_l:4  album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+<section class="uk-section">
+  <div class="uk-container">
+                                   {!!autotag medialist:'.{album_id}.' src:disp limitcnt:3 theme:sub-accordion-access grid:1 grid_s:2 grid_m:3 grid_l:4 album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+  </div>
+</section>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sub-grid_keyurl">
+                                            &#91;medialist:{album_id} src:disp limitcnt:5 theme:sub-grid_keyurl grid_s:2 grid_m:5 text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+<section class="uk-section">
+  <div class="uk-container">
+                                   {!!autotag medialist:'.{album_id}.' src:disp limitcnt:5 theme:sub-grid_keyurl grid_s:2 grid_m:5 text:詳細を見る album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+   </div>
+</section>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sub-slideshow">
+                                            &#91;medialist:{album_id} src:orig limitcnt:3 theme:sub-slideshow animation:fade autoplay:true autoplayinterval:7000 draggable:true easing:ease finite:false pause-on-hover:true index:0 velocity:1 ratio:16_9 minheight:400 maxheight:500 animationduration:0.1s album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+                                    {!!autotag medialist:'.{album_id}.' src:orig limitcnt:3 theme:sub-slideshow animation:fade autoplay:true autoplayinterval:7000 draggable:true easing:ease finite:false pause-on-hover:true index:0 velocity:1 ratio:16_9 minheight:400 maxheight:500 animationduration:0.1s album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sub-slideshow-kenburns">
+                                            &#91;medialist:{album_id} src:orig limitcnt:3 theme:sub-slideshow-kenburns animation:scale animation:fade autoplay:true autoplayinterval:7000 draggable:true easing:ease finite:false pause-on-hover:true index:0 velocity:1 ratio:16_9 minheight:400 maxheight:500 animationduration:0.1s album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+                                    {!!autotag medialist:'.{album_id}.' src:orig limitcnt:3 theme:sub-slideshow-kenburns animation:scale animation:fade autoplay:true autoplayinterval:7000 draggable:true easing:ease finite:false pause-on-hover:true index:0 velocity:1 ratio:16_9 minheight:400 maxheight:500 animationduration:0.1s album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+</section>
+
+<?php global $bxslider; if($bxslider){ ?>
+<section>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_sub-bxslider-animation-desc-top">
+                                            &#91;medialist:{album_id} src:orig limitcnt:3 theme:sub-bxslider-animation-desc-top bxslider:bxslider_pager animation:uk-animation-kenburns album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+<p>全幅のTOPスライダーとしてのみ活用します。</p>
+                                    {!!autotag medialist:'.{album_id}.' src:orig limitcnt:3 theme:sub-bxslider-animation-desc-top bxslider:bxslider_pager animation:uk-animation-kenburns album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+</section>
+<?php } ?>
+
+<section class="uk-section uk-section-primary uk-preserve-color uk-margin-large-top">
+  <div class="uk-container">
+    <h3 style="color:white">5) listタイプ</h3>
+  </div>
+</section>
+
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_list">
+                                            &#91;medialist:{album_id} src:tn tn:400 limitcnt:3 theme:list album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+    <p>ulタグ無し。</p>
+    <ul class="uk-subnav uk-flex-inline uk-flex-center uk-margin-remove-bottom">
+      {!!autotag medialist:'.{album_id}.' src:tn tn:400 theme:list limitcnt:3 !!}
+    </ul>
+    <div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_list_inc">
+                                            &#91;medialist:{album_id} src:tn tn:400 limitcnt:3 theme:list_inc album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+    <p>data-slide-index="0","1","2"と画像ごとに数値が加算していきます。ulタグ無し。</p>
+    <ul class="uk-subnav uk-flex-inline uk-flex-center uk-margin-remove-bottom">
+      {!!autotag medialist:'.{album_id}.' src:tn tn:400 limitcnt:3 theme:list_inc !!}
+    </ul>
+    <div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_uk-list">uk-list, uk-list_incでサムネイル付きスライドショー</h4>
+
+<textarea class="uk-textarea" style="height:100px"><div uk-slideshow='animation: fade; autoplay: true '>
+    <ul class="uk-slideshow-items">
+        &#91;medialist:{album_id} src:disp limitcnt:10 theme:uk-list&#93;
+    </ul>
+    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#"></a>
+    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#"></a>
+    <div class="uk-grid-small uk-child-width-1-10" style="margin-top:15px" uk-grid>
+        &#91;medialist:{album_id} src:tn tn:400 limitcnt:10 theme:uk-list_inc&#93;
+    </div>
+</div></textarea>
+
+<section class="uk-section uk-preserve-color uk-margin-large-top">
+  <div class="uk-container">
+    <div uk-slideshow='animation: fade; autoplay: true '>
+       <ul class="uk-slideshow-items">
+	            {!!autotag medialist:'.{album_id}.' src:disp limitcnt:8 theme:uk-list !!}
+	    </ul>
+	    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#"></a>
+	    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#"></a>
+	    <div class="uk-grid-small uk-child-width-1-6" style="margin-top:15px" uk-grid>
+	        {!!autotag medialist:'.{album_id}.' src:tn tn:400 limitcnt:10 theme:uk-list_inc !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+	    </div>
+		</div>
+	</div>
+</section>
+
+<section class="uk-section uk-section-primary uk-preserve-color">
+  <div class="uk-container">
+    <h3 style="color:white">6) debug用</h3>
+  </div>
+</section>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_debug">
+                                            &#91;medialist:{album_id} src:disp limitcnt:1 theme:debug album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+<section class="uk-section uk-preserve-color">
+  <div class="uk-container">
+      {!!autotag medialist:'.{album_id}.' src:disp theme:debug limitcnt:1 !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+  </div>
+</section>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_media_url">
+                                            &#91;medialist:{album_id} src:disp limitcnt:1 theme:media_url  album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+<section class="uk-section uk-preserve-color">
+  <div class="uk-container">
+                                    {!!autotag medialist:'.{album_id}.' src:disp limitcnt:1 theme:media_url !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+  </div>
+</section>
+
+<h4 class="uk-margin-large-top uk-card uk-card-secondary" id="_media_id">
+                                            &#91;medialist:{album_id} limitcnt:1 theme:media_id  album_title_disp:0 media_title_disp:1 album_title_tag:h2 media_title_tag:div&#93;</h4>
+<section class="uk-section uk-preserve-color">
+  <div class="uk-container">
+                                   {!!autotag medialist:'.{album_id}.' limitcnt:1 theme:media_id !!}<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+  </div>
+</section>
+
+
+<section class="uk-section">
+  <div class="uk-container">
+
+    <ul class="uk-subnav uk-flex-center">
+    <li class="uk-text-center"><a href="https://github.com/ivywe/geeklog-ivywe/tree/Geeklog2.2/extended/plugins/mediagallery/templates/medialist"><span uk-icon="icon: github; ratio: 3.5"></span>GitHub</a></li>
+    <li class="uk-text-center"><a href="https://getuikit.com"><span uk-icon="icon: uikit; ratio: 3.5"></span>UIkit</a></li>
+    </ul>
+
+    <ul class="uk-subnav uk-flex-center">
+      <li><a href="#_top" uk-scroll="offset:100">TOP</a></li>
+      <li><a href="#_medialist" uk-scroll="offset:100">medialist活用方法</a></li>
+    </ul>
+
+  </div>
+</section>
+<div class="uk-flex uk-flex-right"><a href="#_medialist_top" class="uk-scroll">▲</a></div>
+
+<?php } ?>
+
+{# end {templatelocation} #}
