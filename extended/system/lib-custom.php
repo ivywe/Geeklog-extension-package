@@ -2,7 +2,7 @@
 
 /* Reminder: always indent with 4 spaces (no tabs). */
 // +---------------------------------------------------------------------------+
-// | Geeklog 2.1                                                               |
+// | Geeklog 2.2                                                               |
 // +---------------------------------------------------------------------------+
 // | lib-custom.php                                                            |
 // |                                                                           |
@@ -107,9 +107,8 @@ function CUSTOM_loginErrorHandler($msg = '')
     } elseif ($msg == '') {
         $msg = 81;
     }
-    $retval = COM_refresh($_CONF['site_url'] . '/index.php?mode=loginfail&amp;msg=' . $msg);
-    echo $retval;
-    exit;
+
+    COM_redirect($_CONF['site_url'] . '/index.php?mode=loginfail&amp;msg=' . $msg);
 }
 
 
@@ -176,9 +175,9 @@ function CUSTOM_templateSetVars($templatename, $template)
     - All other users will see the standard User profile with the optional extended custom information
     - Customization requires changes to a few of the core template files to add {customfields} variables
     - See notes below in the custom function about the template changes
-    - Remember remote accounts (like OAuth and OpenID) behave differently when they are created (and logging in) so the
-      CUSTOM_userCreate function is not run for new remote accounts. All other functions are as once
-      created in Geeklog, remote accounts behave pretty much like the other accounts. If you do not want to use the rest
+    - Remember remote accounts (like OAuth and OpenID) behave differently when they are created (and logging in) so the 
+      CUSTOM_userCreate function is not run for new remote accounts. All other functions are as once 
+      created in Geeklog, remote accounts behave pretty much like the other accounts. If you do not want to use the rest 
       of the custom user functions for remote accounts you will have to handle that within the custom function
 */
 
@@ -272,8 +271,8 @@ function CUSTOM_userEdit($uid)
 
     $var = "Value from custom table";
     $cookietimeout = DB_getitem($_TABLES['users'], 'cookietimeout', $uid);
-    $selection = '<select class="uk-select uk-form-width-small" class="uk-select" name="cooktime">' . LB;
-    $selection .= COM_optionList($_TABLES['cookiecodes'], 'cc_value,cc_descr', $cookietimeout, 0);
+    $selection = '<select name="cooktime">' . LB;
+    $selection .= COM_simpleOptionList(COM_getCookieCodes(), $cookietimeout);
     $selection .= '</select>';
     $retval .= '<tr>
         <td align="right">Remember user for:</td>
@@ -281,7 +280,7 @@ function CUSTOM_userEdit($uid)
      </tr>';
     $retval .= '<tr>
         <td align="right"><b>Custom Fields:</b></td>
-        <td><input type="text" class="uk-input" name="custom1" size="50" value="' . $var . '"' . XHTML . '></td>
+        <td><input type="text" name="custom1" size="50" value="' . $var . '"' . XHTML . '></td>
      </tr>';
     $retval .= '<tr><td colspan="2"><hr' . XHTML . '></td></tr>';
 
@@ -325,7 +324,7 @@ function CUSTOM_userForm($msg = '')
     $post_url = $_CONF['site_url'] . '/users.php';
     $postmode = 'create';
     $value = 'Register Now!';
-    $submitbutton = '<button type="submit" value=" ' . $value . '" class="uk-button uk-button-default">' . $value . '</button>';
+    $submitbutton = '<button type="submit" value=" ' . $value . '" class="uk-button">' . $value . '</button>';
     $message = "<blockquote style=\"padding-top:10px;\"><b>Please complete the application below. Once you have completed the application, click the Register Now! button and the application will be processed immediately.</b></blockquote>";
 
     $user_templates = COM_newTemplate($_CONF['path_layout'] . 'custom');
@@ -399,13 +398,12 @@ function CUSTOM_userCheck($username, $email = '')
 
 /**
  * Custom function to retrieve and return a formatted list of blocks
- * Can be used when calling COM_siteHeader or COM_siteFooter
+ * Can be used when calling COM_createHTMLDocument
  * Example:
  * 1: Setup an array of blocks to display
- * 2: Call COM_siteHeader or COM_siteFooter
+ * 2: Call COM_createHTMLDocument
  *  $myblocks = array( 'site_menu', 'site_news', 'poll_block' );
- * COM_siteHeader( array( 'CUSTOM_showBlocks', $myblocks )) ;
- * COM_siteFooter( true, array( 'CUSTOM_showBlocks', $myblocks ));
+ * COM_createHTMLDocument(array( 'CUSTOM_showBlocks', $myblocks));
  *
  * @param   array $showblocks An array of block names to retrieve and format
  * @return  string                 Formated HTML containing site footer and optionally right blocks
@@ -418,7 +416,7 @@ function CUSTOM_showBlocks($showblocks)
 
     if (!isset($_USER['noboxes'])) {
         if (!empty($_USER['uid'])) {
-            $noboxes = DB_getItem($_TABLES['userindex'], 'noboxes', "uid = {$_USER['uid']}");
+            $noboxes = DB_getItem($_TABLES['user_attributes'], 'noboxes', "uid = {$_USER['uid']}");
         } else {
             $noboxes = 0;
         }
@@ -554,6 +552,82 @@ function CUSTOM_handleError($errno, $errstr, $errfile, $errline, $errcontext)
     exit;
 }
 */
+
+/**
+ * 日本語拡張版提供　PHPブロック関数およびカスタム関数
+ * Additional Custom Functions: PHP block functions and custom functions
+ */
+
+// 静的ページコンテンツの内容を返す
+// Return Staticpage content
+if (file_exists($_CONF['path'] . 'system/custom/custom_getstaticpage.php')) {
+    require_once $_CONF['path'] . 'system/custom/custom_getstaticpage.php';
+}
+
+// テーマ変更時にデフォルトテーマをセットしているユーザのテーマも強制的に変更する
+// Force user's theme when site theme is changed
+if (file_exists($_CONF['path'] . 'system/custom/custom_forcethemechange.php')) {
+	require_once $_CONF['path'] . 'system/custom/custom_forcethemechange.php';
+}
+
+// 新着記事リストを表示する
+// List new articles
+if (file_exists($_CONF['path'] . 'system/custom/phpblock_lastarticles.php')) {
+	require_once $_CONF['path'] . 'system/custom/phpblock_lastarticles.php';
+}
+
+// アクセス数を表示する
+// Display access number
+if (file_exists($_CONF['path'] . 'system/custom/phpblock_stats.php')) {
+	require_once $_CONF['path'] . 'system/custom/phpblock_stats.php';
+}
+
+// Optional custom functions
+
+// テーマ変数をセットする
+// Set theme variables
+// if (file_exists($_CONF['path'] . 'system/custom/custom_templatesetvars.php')) {
+// 	 require_once $_CONF['path'] . 'system/custom/custom_templatesetvars.php';
+// }
+
+// ユーザーエージェント判定のテンプレート変数を追加する
+// Add theme variable of useragent
+// if (file_exists($_CONF['path'] . 'system/custom/useragent.class.php')) {
+// 	require_once $_CONF['path'] . 'system/custom/useragent.class.php';
+// }
+
+// ログインユーザの権限を表示する
+// Show rights
+// if (file_exists($_CONF['path'] . 'system/custom/phpblock_showrights.php')) {
+//	require_once $_CONF['path'] . 'system/custom/phpblock_showrights.php';
+// }
+
+// サイトのテーマを変更する
+// Change site theme
+// if (file_exists($_CONF['path'] . 'system/custom/phpblock_themetester.php')) {
+// 	require_once $_CONF['path'] . 'system/custom/phpblock_themetester.php';
+// }
+
+// RSS Aggregator
+//if (file_exists($_CONF['path'] . 'system/custom/phpblock_rssaggregator.php')) {
+//   require_once $_CONF['path'] . 'system/custom/phpblock_rssaggregator.php';
+//}
+
+// Forum Center Block
+// if (file_exists($_CONF['path'] . 'system/custom/custom_centerblock_forum.php')) {
+//    require_once $_CONF['path'] . 'system/custom/custom_centerblock_forum.php';
+// }
+// Uses: Install autotag plugin and create autotag
+// autotag: (title) forumcenterblock
+//          (mode) Use PHP
+//          (content) return CUSTOM_centerblock_forum ($p1);
+//
+
+
+
+
+
+
 
 /**
  * 日本語拡張版提供　PHPブロック関数およびカスタム関数
