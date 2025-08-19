@@ -38,6 +38,10 @@ if (strpos(strtolower($_SERVER['PHP_SELF']), strtolower(basename(__FILE__))) !==
     die('This file can not be used on its own!');
 }
 
+if (!defined('VERSION')) {
+    define('VERSION', '2.2.2'); // 適切なバージョンを設定
+}
+
 global $_TABLES, $_DB_table_prefix; // Needs to be set for when plugin enabled (if plugin already disabled)
 $_MG_CONF = array();
 $_MG_CONF['pi_version'] = '1.7.0';
