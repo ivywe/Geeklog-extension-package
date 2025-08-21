@@ -1,26 +1,45 @@
-#ファイルがみつからない場合のページを指定する。
+##
+# Geeklog .htaccess file for Apache Web Servers
+#
+# - URL Routing Rule
+# - Security and Optimizing Rules
+#
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!                                                                       !!
+# !!  If you get an Internal Server Error 500 or a blank page when trying  !!
+# !!  to access your site, remove this file.                               !!
+# !!                                                                       !!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+## Disable directory listings and multi views
+IndexIgnore *
+Options -Indexes -MultiViews
+
+## URL Routing
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # RewriteBase /
+    # Directs all Geeklog requests through the site index file
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # For web servers that use PHP FastCGI implementation
+    RewriteRule ^(.*)$ /index.php/$1 [L]
+    # For web servers that use PHP-FPM implementation and have issues (if used, comment out line above)
+    # RewriteRule ^(.*)$ /index.php?/$1 [L]
+</IfModule>
+
+## Redirect 404 
 ErrorDocument 404 /404.html
 
-# wwwありに統一
-# RewriteEngine on
-# RewriteCond %{HTTP_HOST} ^○○○\.com$
-# RewriteRule ^(.*)$ http://www.○○○.com/$1 [R=301,L]
 
-# wwwなしに統一
-# RewriteEngine on
-# RewriteCond %{HTTP_HOST} ^www\.○○○\.com$
-# RewriteRule ^(.*)$ http://○○○.com/$1 [R=301,L]
+# 多言語サイト用
+# トップページ（/）をリダイレクト
+# RewriteRule ^$ /index.php/topic/home_ja [L,R=301]
 
-# 多言語サイト用 / をブラウザが日本語なら /index.php/topic/home_ja へそれ以外ならhome_enへ飛ばす
-# RewriteCond %{REQUEST_URI} ^/$
-# RewriteCond %{REQUEST_URI} !(index\.php)
-# RewriteCond %{HTTP:Accept-Language} ^ja [NC]
-# RewriteRule .* /index.php/topic/home_ja [R=301,L]
-# RewriteCond %{REQUEST_URI} ^/$
-# RewriteCond %{REQUEST_URI} !(index\.php)
-# RewriteRule .* /index.php/topic/home_en [R=301,L]
+# index.php のアクセスもリダイレクト
+# RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/index\.php\s
+# RewriteRule ^index\.php$ /index.php/topic/home_ja [R=301,L]
 
-## SSLへリダイレクト
-# RewriteEngine off
-# RewriteCond %{HTTPS} on
-# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+# index.html のアクセスもリダイレクト
+# RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/index\.html\s
+# RewriteRule ^index\.html$ /index.php/topic/home_ja [R=301,L]
