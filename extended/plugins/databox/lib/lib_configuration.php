@@ -160,29 +160,47 @@ function LIB_Restoreconfig(
 // +---------------------------------------------------------------------------+
 // | 戻値 nomal:finish message
 // +---------------------------------------------------------------------------+
-function LIB_Deleteconfig(
-	$pi_name
-	,$config
-)
+function LIB_Deleteconfig($pi_name, $config)
 {
-	COM_errorLog("[".strtoupper($pi_name)."] configuration delete");
+    COM_errorLog("[" . strtoupper($pi_name) . "] configuration delete");
 
     global $_TABLES;
-    $group=$pi_name;
 
-    $box_conf="_".strtoupper($pi_name)."_CONF";
+    $display = '';  // ← 初期化
+
+    // 設定グループ名
+    $group = $pi_name;
+
+    // 設定配列名（例: $_DATABOX_CONF）
+    $box_conf = "_" . strtoupper($pi_name) . "_CONF";
+
+    // グローバル配列を取り出す
     global $$box_conf;
-    $ary=$$box_conf;
-    
-    foreach( $ary  as $nm => $value ){
-      $display.="del: ".$nm."=".$vl."<br>";
-      $config->del($nm,$group);
-    }
-    $$box_conf=array();
-	$config->del(null,$group);
-    DB_delete($_TABLES['conf_values'], 'group_name', $group);	
+    $ary = $$box_conf;
 
-    $display.="..........{$pi_name} Config Delete"."<br>";
+    // $config のチェック
+    if (!is_object($config)) {
+        COM_errorLog("[$pi_name] config object is null or invalid in LIB_Deleteconfig");
+        return "Config object is null or invalid.";
+    }
+
+    // 個別キーの削除
+    foreach ($ary as $nm => $value) {
+        $display .= "del: " . $nm . "=" . $value . "<br>";
+        $config->del($nm, $group);
+    }
+
+    // 設定配列を空に
+    $$box_conf = array();
+
+    // 設定グループ全体の削除（必要であれば）
+    // ※ これが意味するのは、「グループ全体の削除」
+    $config->del(null, $group);
+
+    // DB 上の設定値を削除
+    DB_delete($_TABLES['conf_values'], 'group_name', $group);
+
+    $display .= "..........{$pi_name} Config Delete<br>";
 
     return $display;
 }
