@@ -41,8 +41,8 @@ function phpautotags_l($p1, $p2, $p0, $p3, $p4) {
         $url_current = $p4;
     }
     
-    $array = explode('_', $url_current);
-    $lang_id = substr(end($array), 0, 2);
+
+    $lang_id = COM_getLanguageId();
     
     if (strcmp($p1, $lang_id) === 0) {
         $ret  = str_replace('[l:'.$p1.']', '', $p0);
