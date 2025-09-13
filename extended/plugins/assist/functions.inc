@@ -303,6 +303,17 @@ function assist_GetHeaderCode(
 	global $_IMAGE_TYPE;
 	global $_ASSIST_CONF;
 
+if (!isset($og_title)) {
+    $og_title = '';
+}
+if (!isset($og_image)) {
+    $og_image = '';
+}
+if (!isset($og_description)) {
+    $og_description = '';
+}
+
+
 	$pi_name="assist";
 	$retval="";
 	

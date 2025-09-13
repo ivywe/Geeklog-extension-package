@@ -23,7 +23,8 @@ function LIB_Backupconfig(
 	COM_errorLog("[".strtoupper($pi_name)."] configuration backup");
 	
 	global $_CONF;
-
+    $display="";
+    
 	if ($pi_name==""){
 		$xconf_name="_CONF";
 	}else{
@@ -106,6 +107,7 @@ function LIB_Restoreconfig(
 	,$mode=""
 )
 {
+    $display="";
 	COM_errorLog("[".strtoupper($pi_name)."] configuration restore");
 	
     global $_CONF;
@@ -134,19 +136,26 @@ function LIB_Restoreconfig(
 		$box_conf_bak="_".strtoupper($pi_name)."_CONF_bak";
 		$box_conf_bak=$$box_conf_bak;
 		
-		foreach( $box_conf_bak as $nm => $value ){
-			if (($nm==="version") OR (substr($nm,0,3)==="fs_")
-				OR ($pi_name=="assist" AND $nm==="cron_schedule_interval")){
-			}else{
-				$vl=$box_conf_bak[$nm];
-				//$vl=stripslashes($vl);
-				$display.=$nm."=".$vl."<br>";
-				$config->set($nm, $vl,$group);
-			}
-		}
-		
-        $display.="..........{$pi_name} Config Restore finished!"."<br>";
-        //-----
+	foreach( $box_conf_bak as $nm => $value ){
+	    if (($nm === "version") || (substr($nm,0,3) === "fs_")
+	        || ($pi_name == "assist" && $nm === "cron_schedule_interval")) {
+	        continue;
+	    } else {
+	        $vl = $box_conf_bak[$nm];
+	        // 配列やオブジェクトを文字列化
+	        if (is_array($vl) || is_object($vl)) {
+	            $vl_display = json_encode($vl);
+	        } else {
+	            $vl_display = $vl;
+	        }
+	        $display .= $nm . "=" . $vl_display . "<br>";
+	        $config->set($nm, $vl, $group);
+	    }
+	}
+
+	$display .= "..........{$pi_name} Config Restore finished!<br>";
+
+
 
     }
     return $display;
@@ -184,11 +193,15 @@ function LIB_Deleteconfig($pi_name, $config)
         return "Config object is null or invalid.";
     }
 
-    // 個別キーの削除
-    foreach ($ary as $nm => $value) {
-        $display .= "del: " . $nm . "=" . $value . "<br>";
-        $config->del($nm, $group);
-    }
+	foreach ($ary as $nm => $value) {
+	    // 配列またはオブジェクトが値の場合に文字列化
+	    if (is_array($value) || is_object($value)) {
+	        $value = json_encode($value);  // 配列をJSON形式に変換
+	    }
+	    
+	    $display .= "del: " . $nm . "=" . $value . "<br>";
+	    $config->del($nm, $group);
+	}
 
     // 設定配列を空に
     $$box_conf = array();

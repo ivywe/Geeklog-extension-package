@@ -25,6 +25,9 @@ function plugin_autotags_databox (
     global $_TABLES;
     global $_CONF,$_DATABOX_CONF;
     global $LANG_DATABOX_autotag_desc;
+    
+    $tagname = []; // ここで必ず初期化
+
 
     //Option Display
     if ($op == 'tagname' ) {
@@ -179,7 +182,7 @@ function plugin_autotags_databox (
                         $rt=DATABOX_count_each_afield(
                             "databox"
                             ,$p['templatesetvar']
-       	                    ,$p['value']
+                               ,$p['value']
                             ,$p['type_id']
                             ,$p['permission']
                             ,$p['numberformat']
@@ -300,7 +303,7 @@ function plugin_autotags_databox (
                                 ,$p['permission']
                             );
                         break;
-				   //@@@@@202012---->
+                   //@@@@@202012---->
                    case 'code':
                         $rt=databox_code(
                                 $p['code']
@@ -309,7 +312,7 @@ function plugin_autotags_databox (
                                 ,$p['mode']
                             );
                         break;
-				   //@@@@@202012<----
+                   //@@@@@202012<----
                 }
 
                 $content = str_replace ($autotag['tagstr'], $rt, $content);
@@ -640,10 +643,10 @@ function databox_category(
             $templates->set_var ('_languageid', "");
         }
 
-				if(!defined('THIS_SCRIPT'))
-				{
-					define('THIS_SCRIPT', '');
-				}
+                if(!defined('THIS_SCRIPT'))
+                {
+                    define('THIS_SCRIPT', '');
+                }
 
         $templates->set_var ('site_url',$_CONF['site_url']);
         $templates->set_var ('this_script',THIS_SCRIPT);
@@ -2038,7 +2041,7 @@ function databox_data(
                     ,$fieldset_id
                     ,""
                     ,$code
-										,strftime( $_CONF['shortdate'], strtotime( $A['expired_un'] ) )
+                                        ,strftime( $_CONF['shortdate'], strtotime( $A['expired_un'] ) )
                     );
 
                 if  ($A['page_title']<>""){
@@ -2742,7 +2745,7 @@ function databox_newlist(
         $list->set_var ('url', $rt['url']);
         $list->set_var ('title', $title);
 
-		$list->set_var ('description', $description);
+        $list->set_var ('description', $description);
 
         $permission=SEC_hasAccess2($A);
         $list->set_var ('permission',$permission);
@@ -3124,7 +3127,7 @@ function databox_detail_link(
         if  ($code<>""){
             $url.="code=".$code;
         }
-	}
+    }
     $return['url']=  COM_buildUrl( $url );
     $return['link']= COM_createLink($title, $return['url']);
     return $return;
@@ -3212,7 +3215,7 @@ function databox_search(
                 $arg_sv.=$key."=".$value;
             }
         }
-	}
+    }
     if  ($argary['fieldset_id']==""){
         $argary['fieldset_id']=0;
     }
@@ -3992,7 +3995,7 @@ function databox_code(
 // | 戻値 nomal:指定値
 // +---------------------------------------------------------------------------+
 {
-	$pi_name= 'databox';
+    $pi_name= 'databox';
 
     global $_TABLES;
     global $_CONF;
@@ -4000,9 +4003,9 @@ function databox_code(
     //-----
     $tbl1=$_TABLES[strtoupper($pi_name).'_base'] ;
     $tbl4=$_TABLES[strtoupper($pi_name).'_category'] ;
-	$tbl5=$_TABLES[strtoupper($pi_name).'_def_category'] ;
+    $tbl5=$_TABLES[strtoupper($pi_name).'_def_category'] ;
 
-	if ($code=="" ){
+    if ($code=="" ){
         return "";
     }
     $rt=DB_getItem( $tbl1   ,'code',"code='{$code}'");
@@ -4021,8 +4024,8 @@ function databox_code(
                 if ($ids<>""){
                     $ids.=",";
                 }
-			$w_id=DATABOX_codetoid($val,strtoupper($pi_name).'_def_category',"category_id");
-			$idsary[]=$w_id;
+            $w_id=DATABOX_codetoid($val,strtoupper($pi_name).'_def_category',"category_id");
+            $idsary[]=$w_id;
                 $ids.=$w_id;
             }
         }
@@ -4034,9 +4037,9 @@ function databox_code(
     //-----
     $sql = "SELECT ".LB;
 
-	$sql .= " code ".LB;
+    $sql .= " code ".LB;
 
-	$sql .= " FROM ".LB;
+    $sql .= " FROM ".LB;
 
     $sql .= " {$tbl1} AS t1 ".LB;
 
@@ -4083,35 +4086,35 @@ function databox_code(
     $result = DB_query ($sql);
     $numrows = DB_numRows ($result);
 
-	$code_prev="";
-	$code_next="";
+    $code_prev="";
+    $code_next="";
     if ($numrows > 0) {
-		$code_current="";
-		$code_fit="0";
-		for ($i = 0; $i < $numrows; $i++) {
+        $code_current="";
+        $code_fit="0";
+        for ($i = 0; $i < $numrows; $i++) {
             $A = DB_fetchArray ($result);
             $A = array_map('stripslashes', $A);
 
             $code_current=COM_applyFilter($A['code']);
-			if  ($code_current==$code) {
-				$code_fit="1";
-			}else{
-				if  ($code_fit=="0"){
-					$code_prev=$code_current;
-				}
-				if ($code_fit=="1"){
-					$code_next=$code_current;
-					break;
-				}
-			}
+            if  ($code_current==$code) {
+                $code_fit="1";
+            }else{
+                if  ($code_fit=="0"){
+                    $code_prev=$code_current;
+                }
+                if ($code_fit=="1"){
+                    $code_next=$code_current;
+                    break;
+                }
+            }
         }
-	}
+    }
 
-	if  (strtoupper($mode)=="PREV"){
-		$rt=$code_prev;
-	}else{
-		$rt=$code_next;
-	}
+    if  (strtoupper($mode)=="PREV"){
+        $rt=$code_prev;
+    }else{
+        $rt=$code_next;
+    }
     return $rt;
 
 

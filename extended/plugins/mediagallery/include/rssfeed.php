@@ -42,7 +42,7 @@ require_once $_CONF['path'] . 'plugins/mediagallery/include/lib/feedcreator.clas
 function MG_buildAlbumRSS($aid)
 {
     global $_MG_CONF, $_CONF, $_TABLES;
-
+return;
     $feedpath = MG_getFeedPath();
     $fname = sprintf($_MG_CONF['rss_feed_name'] . "%06d.rss", $aid);
     $feedname = $feedpath . $fname;
@@ -163,7 +163,7 @@ function MG_buildAlbumRSS($aid)
 function MG_processAlbumFeedItems(&$rss, $aid, &$album_data)
 {
     global $_MG_CONF, $_CONF, $_TABLES;
-
+return;
     $sql = MG_buildMediaSql(array(
         'album_id'  => $aid,
         'sortorder' => 4  // ORDER BY m.media_time DESC
@@ -302,7 +302,7 @@ function MG_parseAlbumsRSS(&$rss, $aid)
 function MG_buildFullRSS()
 {
     global $_MG_CONF, $_CONF, $_TABLES;
-
+return;
     $feedpath = MG_getFeedPath();
 
     if ($_MG_CONF['rss_full_enabled'] != 1) {
