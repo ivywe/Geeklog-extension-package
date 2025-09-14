@@ -1,19 +1,32 @@
 {# begin {templatelocation} #}
 
+<?php
+    global $_CONF;
+    
+    $url_image = $this->get_var('site_url') . "/ogp.jpg";
+    $url_current =  strtok(COM_getCurrentURL(), '?');
+    $og_description = $this->get_var('og_description');
+    if( is_null($og_description) ){ $og_description = $_CONF['meta_description']; }
+?>
+
 <meta property="og:type" content="{og_type}" {xhtml}>
 <meta property="og:title" content="{og_title}" {xhtml}>
-<meta property="og:image" content="{og_image}" {xhtml}>
-<meta property="og:url" content="{currenturl}" {xhtml}>
+<meta property="og:image" content="<?php echo $url_image; ?>" {xhtml}>
+<meta property="og:url" content="<?php echo $url_current; ?>" {xhtml}>
 <meta property="og:site_name" content="{site_name}" {xhtml}>
-<meta property="og:description" content="{og_description}" {xhtml}>
+<meta property="og:description" content="<?php echo $og_description; ?>" {xhtml}>
 
-{# 
-<meta property="fb:app_id" content="{facebook_consumer_key}" {xhtml}>
-<meta name="twitter:card" content="summary">
-#}
+<?php global $_TABLES; if( COM_getLanguageId() ){ ?>
+	<?php if(!empty(DB_getItem($_TABLES['topics'],'id',"code='home_ja'"))){ ?> <link rel="alternate" href="{site_url}/index.php/topic/home_ja/code" hreflang="ja" />
+	<?php } ?>
+	<?php if(!empty(DB_getItem($_TABLES['topics'],'id',"code='home_en'"))){ ?> <link rel="alternate" href="{site_url}/index.php/topic/home_en/code" hreflang="en" />
+	<?php } ?>
+	<?php if(!empty(DB_getItem($_TABLES['topics'],'id',"code='home_zh'"))){ ?> <link rel="alternate" href="{site_url}/index.php/topic/home_zh/code" hreflang="zh" />
+	<?php } ?>
+	<?php if(!empty(DB_getItem($_TABLES['topics'],'id',"code='home_ko'"))){ ?> <link rel="alternate" href="{site_url}/index.php/topic/home_ko/code" hreflang="ko" />
+	<?php } ?>
+<?php } ?>
 
-{# 
-<link rel="alternate" href="{site_url}/" hreflang="x-default" />
-#}
+{!if facebook_consumer_key}<meta property="fb:app_id" content="{facebook_consumer_key}" {xhtml}>{!endif}
 
 {# end {templatelocation} #}
