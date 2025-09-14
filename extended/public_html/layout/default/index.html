@@ -51,11 +51,7 @@ echo PLG_replaceTags('[staticpage_content:_header-navigation_'.COM_getLanguageId
 <?php  
 if( SEC_inGroup('Root')){ 
   global $_TABLES;
-  if (
-
-!empty(DB_getItem($_TABLES['staticpage'], 'sp_id', "sp_id='_admin-nav'"))
-
-) {
+  if ( !empty(DB_getItem($_TABLES['staticpage'], 'sp_id', "sp_id='_admin-nav'" ) ) ) {
     echo PLG_replaceTags('[staticpage_content:_admin-nav]'); 
   } else { ?>
 
@@ -111,7 +107,6 @@ margin-left:10px;
   margin: 0;
   background: none;
 }
-
 
 .a-navlist:link,
 .a-navlist:visited,
@@ -200,18 +195,16 @@ color: #fff;
     </ul>
   </div>
 </nav>
-
-
-
-
-
-
 <?php } ?>
 <?php } ?>
 
-<?php if( COM_onFrontpage() ){
-echo PLG_replaceTags('[staticpage_content:_top_'.COM_getLanguageId().']');
- } ?>
+<?php 
+if ( !empty(DB_getItem($_TABLES['staticpage'], 'sp_id', "sp_id='_top_" . COM_getLanguageId() . "'") ) ) {
+    echo PLG_replaceTags('[staticpage_content:_top_' . COM_getLanguageId() . ']');
+} else if ( !empty(DB_getItem($_TABLES['staticpage'], 'sp_id', "sp_id='_top") ) ) {
+    echo PLG_replaceTags('[staticpage_content:_top]');
+}
+ ?>
 
 {!!if {layout_columns} !== "center" !!}
   {# #wrapper { #}
