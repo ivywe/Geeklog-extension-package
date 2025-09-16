@@ -5,6 +5,10 @@
 <meta charset="{charset}"{xhtml}>
 <title>{page_title_and_site_name}</title>
 
+<?php $url_current = COM_getCurrentURL(); if( strpos( $url_current, '404' ) !== false ){ ?>
+<meta http-equiv="refresh" content="5;URL='{site_url}'" />
+<?php } ?>
+
 <!-- Mobile Specific Metas -->
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"{xhtml}>
 
@@ -142,6 +146,7 @@ margin-left:10px;
 
 .uk-navbar-container.gl-admin:not(.uk-navbar-transparent) .uk-navbar-nav > li > a {
     color: #eee;
+    font-size:13px;
 }
 
 .gl-admin .uk-navbar-nav>li>a {
@@ -195,8 +200,7 @@ color: #fff;
     </ul>
   </div>
 </nav>
-<?php } ?>
-<?php } ?>
+<?php } } ?>
 
 <?php $url_current = COM_getCurrentURL(); if( COM_onFrontpage() || strpos( $url_current, '/index.php/topic/home_' ) !== false ){
     echo PLG_replaceTags('[staticpage_content:_top_'.COM_getLanguageId().']');
@@ -209,8 +213,6 @@ color: #fff;
     <div id="centerblocks">
 {!endif}
 <main id="main-content" role="main" itemscope="itemscope" itemprop="mainContentOfPage" itemtype="http://schema.org/WebPageElement">
-
-{# ウェルカムメッセージ Japanizeプラグイン活用時は{welcome_msg_jp}を使えます。 #}
           {system_messsages}
           {content}
                   </main>
