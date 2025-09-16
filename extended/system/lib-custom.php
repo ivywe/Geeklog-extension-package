@@ -175,9 +175,9 @@ function CUSTOM_templateSetVars($templatename, $template)
     - All other users will see the standard User profile with the optional extended custom information
     - Customization requires changes to a few of the core template files to add {customfields} variables
     - See notes below in the custom function about the template changes
-    - Remember remote accounts (like OAuth and OpenID) behave differently when they are created (and logging in) so the 
-      CUSTOM_userCreate function is not run for new remote accounts. All other functions are as once 
-      created in Geeklog, remote accounts behave pretty much like the other accounts. If you do not want to use the rest 
+    - Remember remote accounts (like OAuth and OpenID) behave differently when they are created (and logging in) so the
+      CUSTOM_userCreate function is not run for new remote accounts. All other functions are as once
+      created in Geeklog, remote accounts behave pretty much like the other accounts. If you do not want to use the rest
       of the custom user functions for remote accounts you will have to handle that within the custom function
 */
 
@@ -567,19 +567,19 @@ if (file_exists($_CONF['path'] . 'system/custom/custom_getstaticpage.php')) {
 // テーマ変更時にデフォルトテーマをセットしているユーザのテーマも強制的に変更する
 // Force user's theme when site theme is changed
 if (file_exists($_CONF['path'] . 'system/custom/custom_forcethemechange.php')) {
-	require_once $_CONF['path'] . 'system/custom/custom_forcethemechange.php';
+    require_once $_CONF['path'] . 'system/custom/custom_forcethemechange.php';
 }
 
 // 新着記事リストを表示する
 // List new articles
 if (file_exists($_CONF['path'] . 'system/custom/phpblock_lastarticles.php')) {
-	require_once $_CONF['path'] . 'system/custom/phpblock_lastarticles.php';
+    require_once $_CONF['path'] . 'system/custom/phpblock_lastarticles.php';
 }
 
 // アクセス数を表示する
 // Display access number
 if (file_exists($_CONF['path'] . 'system/custom/phpblock_stats.php')) {
-	require_once $_CONF['path'] . 'system/custom/phpblock_stats.php';
+    require_once $_CONF['path'] . 'system/custom/phpblock_stats.php';
 }
 
 // Optional custom functions
@@ -587,25 +587,25 @@ if (file_exists($_CONF['path'] . 'system/custom/phpblock_stats.php')) {
 // テーマ変数をセットする
 // Set theme variables
 // if (file_exists($_CONF['path'] . 'system/custom/custom_templatesetvars.php')) {
-// 	 require_once $_CONF['path'] . 'system/custom/custom_templatesetvars.php';
+//      require_once $_CONF['path'] . 'system/custom/custom_templatesetvars.php';
 // }
 
 // ユーザーエージェント判定のテンプレート変数を追加する
 // Add theme variable of useragent
 // if (file_exists($_CONF['path'] . 'system/custom/useragent.class.php')) {
-// 	require_once $_CONF['path'] . 'system/custom/useragent.class.php';
+//     require_once $_CONF['path'] . 'system/custom/useragent.class.php';
 // }
 
 // ログインユーザの権限を表示する
 // Show rights
 // if (file_exists($_CONF['path'] . 'system/custom/phpblock_showrights.php')) {
-//	require_once $_CONF['path'] . 'system/custom/phpblock_showrights.php';
+//    require_once $_CONF['path'] . 'system/custom/phpblock_showrights.php';
 // }
 
 // サイトのテーマを変更する
 // Change site theme
 // if (file_exists($_CONF['path'] . 'system/custom/phpblock_themetester.php')) {
-// 	require_once $_CONF['path'] . 'system/custom/phpblock_themetester.php';
+//     require_once $_CONF['path'] . 'system/custom/phpblock_themetester.php';
 // }
 
 // RSS Aggregator
@@ -643,19 +643,19 @@ if (file_exists($_CONF['path'] . 'system/custom/custom_getstaticpage.php')) {
 // テーマ変更時にデフォルトテーマをセットしているユーザのテーマも強制的に変更する
 // Force user's theme when site theme is changed
 if (file_exists($_CONF['path'] . 'system/custom/custom_forcethemechange.php')) {
-	require_once $_CONF['path'] . 'system/custom/custom_forcethemechange.php';
+    require_once $_CONF['path'] . 'system/custom/custom_forcethemechange.php';
 }
 
 // 新着記事リストを表示する
 // List new articles
 if (file_exists($_CONF['path'] . 'system/custom/phpblock_lastarticles.php')) {
-	require_once $_CONF['path'] . 'system/custom/phpblock_lastarticles.php';
+    require_once $_CONF['path'] . 'system/custom/phpblock_lastarticles.php';
 }
 
 // アクセス数を表示する
 // Display access number
 if (file_exists($_CONF['path'] . 'system/custom/phpblock_stats.php')) {
-	require_once $_CONF['path'] . 'system/custom/phpblock_stats.php';
+    require_once $_CONF['path'] . 'system/custom/phpblock_stats.php';
 }
 
 // Optional custom functions
@@ -663,25 +663,25 @@ if (file_exists($_CONF['path'] . 'system/custom/phpblock_stats.php')) {
 // テーマ変数をセットする
 // Set theme variables
 // if (file_exists($_CONF['path'] . 'system/custom/custom_templatesetvars.php')) {
-// 	 require_once $_CONF['path'] . 'system/custom/custom_templatesetvars.php';
+//      require_once $_CONF['path'] . 'system/custom/custom_templatesetvars.php';
 // }
 
 // ユーザーエージェント判定のテンプレート変数を追加する
 // Add theme variable of useragent
 // if (file_exists($_CONF['path'] . 'system/custom/useragent.class.php')) {
-// 	require_once $_CONF['path'] . 'system/custom/useragent.class.php';
+//     require_once $_CONF['path'] . 'system/custom/useragent.class.php';
 // }
 
 // ログインユーザの権限を表示する
 // Show rights
 // if (file_exists($_CONF['path'] . 'system/custom/phpblock_showrights.php')) {
-//	require_once $_CONF['path'] . 'system/custom/phpblock_showrights.php';
+//    require_once $_CONF['path'] . 'system/custom/phpblock_showrights.php';
 // }
 
 // サイトのテーマを変更する
 // Change site theme
 // if (file_exists($_CONF['path'] . 'system/custom/phpblock_themetester.php')) {
-// 	require_once $_CONF['path'] . 'system/custom/phpblock_themetester.php';
+//     require_once $_CONF['path'] . 'system/custom/phpblock_themetester.php';
 // }
 
 // RSS Aggregator
@@ -707,6 +707,53 @@ if (file_exists($_CONF['path'] . 'system/custom/phpautotags_currenturl.php')) {
   require_once $_CONF['path'] . 'system/custom/phpautotags_currenturl.php';
 }
 /* 404 */
-//if (file_exists($_CONF['path'] . 'system/custom/custom_handle404.php')) {
-//  require_once $_CONF['path'] . 'system/custom/custom_handle404.php';
-//}
+function CUSTOM_handle404($alternate_url = '')
+{
+    global $_CONF, $_TABLES;
+
+    // 404 ヘッダーを送信
+    header('HTTP/1.1 404 Not Found');
+    header('Status: 404 Not Found');
+
+    // 静的ページ `_404` のコンテンツを取得
+    $sql = "SELECT sp_content FROM {$_TABLES['staticpage']} WHERE sp_id = '_404' LIMIT 1";
+    $result = DB_query($sql);
+
+    $content = '';
+    if (DB_numRows($result) > 0) {
+        $A = DB_fetchArray($result);
+        $content = stripslashes($A['sp_content']);
+    } else {
+        // 静的ページが見つからない場合、エラーメッセージを表示
+        $content = '<p style="color:red">404ページが見つかりませんでした。</p>';
+    }
+
+    // 自動タグを展開
+    $content = PLG_replaceTags($content);
+
+    // 404 の場合に追加する meta タグ
+    $meta_tag_robots = '<meta name="robots" content="noindex, nofollow">'; // 例: noindex, nofollow
+
+    // COM_getLanguageId() が NULL でない場合のリダイレクト先
+    $redirect_url = $_CONF['site_url'] . '/';
+    if (COM_getLanguageId() !== NULL) {
+        $redirect_url = $_CONF['site_url'] . '/index.php/topic/home_' . COM_getLanguageId();
+    }
+
+    // メタタグにリダイレクトURLを設定
+    $meta_tag_refresh = '<meta http-equiv="refresh" content="5;URL=\'' . $redirect_url . '\' />'; // 5秒後に指定URLにリダイレクト
+
+    // メタタグをコンテンツの head セクションに追加
+    $display = COM_createHTMLDocument(
+        $content,
+        array(
+            'pagetitle'  => 'ページが見つかりません',
+            'httpstatus' => 404,
+            'what'       => 'none',
+            'headercode' => $meta_tag_robots . "\n" . $meta_tag_refresh // headercode で追加するメタタグ
+        )
+    );
+
+    COM_output($display);
+    exit;
+}
