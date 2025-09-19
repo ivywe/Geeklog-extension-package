@@ -22,16 +22,20 @@
 {rel_links}
 {plg_headercode}
 
-<link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/sawarabimincho.css" media="all" type="text/css"/>
 
-<link rel="stylesheet" href="{site_url}/mediagallery/frames/default/style.css"/>
-<link rel="stylesheet" href="{site_url}/assist/css/style.css"/>
-<link rel="stylesheet" href="{site_url}/layout/recruit/css_ltr/style.css"/>
-<link rel="stylesheet" href="{site_url}/layout/recruit/css_ltr/custom.css"/>
+<link rel="stylesheet" href="{layout_url}/assist/css/style.css"/>
+<link rel="stylesheet" href="{layout_url}/css_ltr/style.css"/>
+<link rel="stylesheet" href="{layout_url}/css_ltr/custom.css"/>
 
 
 {!!autotag staticpage_content:_head !!}
+
+    
+<!-- jQuery (必須) -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+
 
 <!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="{layout_url}/css_{direction}/ie8.css"{xhtml}><![endif]-->
 <!--[if lt IE 9]><script type="text/javascript" src="{layout_url}/javascript/respond.min.js"></script><![endif]-->
@@ -169,14 +173,9 @@ color: #fff;
 </style>
 
 
-<?php 
-if ( !empty(DB_getItem($_TABLES['staticpage'], 'sp_id', "sp_id='_top_" . COM_getLanguageId() . "'")) ) {
-    echo PLG_replaceTags('[staticpage_content:_top_' . COM_getLanguageId() . ']');
-} else if ( !empty(DB_getItem($_TABLES['staticpage'], 'sp_id', "sp_id='_top'")) ) {
-    echo PLG_replaceTags('[staticpage_content:_top]');
-}
-?>
-
+<?php $url_current = COM_getCurrentURL(); if( COM_onFrontpage() || strpos( $url_current, '/index.php/topic/home_' ) !== false ){
+    echo PLG_replaceTags('[staticpage_content:_top_'. COM_getLanguageId() .']');
+} ?>
 
 
 
