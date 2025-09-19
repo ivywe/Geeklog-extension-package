@@ -736,9 +736,7 @@ function CUSTOM_handle404($alternate_url = '')
 
     // COM_getLanguageId() が NULL でない場合のリダイレクト先
     $redirect_url = $_CONF['site_url'] . '/';
-    if (COM_getLanguageId() !== NULL) {
-        $redirect_url = $_CONF['site_url'] . '/index.php/topic/home_' . COM_getLanguageId();
-    }
+
 
     // メタタグにリダイレクトURLを設定
     $meta_tag_refresh = '<meta http-equiv="refresh" content="5;URL=\'' . $redirect_url . '\' />'; // 5秒後に指定URLにリダイレクト
